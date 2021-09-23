@@ -51,6 +51,11 @@ const Quote: React.FC <QuoteProperties> = (props) => {
   const { value: code, bind: bindCode } = useInput("");
   const { value: metros_cuadrados_construidos, bind: bindMetrosCuadradosConstruidos } = useInput("");
 
+  function calculateTotalConstruction(){
+    console.log ("100 - oleeeeee");
+    return "100";
+  }
+
   const makePDFinvoice = async (e: React.SyntheticEvent<Element, Event>) => {
       e.preventDefault();
       setLoading(true);
@@ -113,19 +118,18 @@ const Quote: React.FC <QuoteProperties> = (props) => {
           
             <TableRow key="metresquadrats">
               <TableCell component="th" scope="row">
-                Metres quadrats
+                Metres quadrats -- {calculateTotalConstruction} metres
               </TableCell>
               <TableCell align="right">{props.metres_a_construir} m² </TableCell>
-              <TableCell align="right">{Number(props.metres_a_construir) * 1450} €</TableCell>
+              <TableCell align="right">{Number(props.metres_a_construir) * 1200} €</TableCell>
              
             </TableRow>
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
-                Garatge {Number(props.metres_garatge_planta) > 0 ? "en planta" : "soterrat" }
- planta (m²)
+                Garatge en planta (m²)
               </TableCell>
               <TableCell align="right">{props.metres_garatge_planta} m² </TableCell>
-              <TableCell align="right">{Number(props.metres_garatge_planta)} €</TableCell>
+              <TableCell align="right">{Number(props.metres_garatge_planta) * 1200} €</TableCell>
              
             </TableRow>
 
@@ -133,7 +137,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell component="th" scope="row">
                 Habitacions
               </TableCell>
-              <TableCell align="right"> 3  </TableCell>
+              <TableCell align="right"> {props.habitacions}  </TableCell>
               <TableCell align="right">   </TableCell>
              
             </TableRow>
@@ -142,7 +146,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell component="th" scope="row">
                 Banys
               </TableCell>
-              <TableCell align="right">4 </TableCell>
+              <TableCell align="right"> {props.banys} </TableCell>
               <TableCell align="right">  </TableCell>
              
             </TableRow>
@@ -152,7 +156,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
                 <Box fontWeight="fontWeightBold" m={1}> Total de la construcció </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
-              <TableCell align="right">346.500€</TableCell>
+              <TableCell align="right"> {(Number(props.metres_a_construir) * 1200) + Number(props.metres_garatge_planta) * 1200} €</TableCell>
              
             </TableRow>
          
@@ -173,7 +177,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell component="th" scope="row">
                 Metres quadrats
               </TableCell>
-              <TableCell align="right">330 m² </TableCell>
+              <TableCell align="right"> {props.metres_a_construir} m² </TableCell>
               <TableCell align="right">  </TableCell>
              
             </TableRow>
@@ -181,7 +185,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell component="th" scope="row">
                 Tipus estructura
               </TableCell>
-              <TableCell align="right">Casa passiva </TableCell>
+              <TableCell align="right"> Casa passiva </TableCell>
               <TableCell align="right">   </TableCell>
              
             </TableRow>
@@ -193,7 +197,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
                 <Box fontWeight="fontWeightBold" m={1}>Total projecte arquitectònic i direcció d'obra: </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
-              <TableCell align="right">0 €</TableCell>
+              <TableCell align="right"> {Number(props.metres_a_construir) * 180} €</TableCell>
              
             </TableRow>
          
@@ -214,7 +218,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell component="th" scope="row">
                 Plantes
               </TableCell>
-              <TableCell align="right">2</TableCell>
+              <TableCell align="right"> {props.plantes} </TableCell>
               <TableCell align="right">  </TableCell>
              
             </TableRow>
@@ -222,23 +226,23 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell component="th" scope="row">
                 Metres quadrats
               </TableCell>
-              <TableCell align="right">330 m² </TableCell>
-              <TableCell align="right"> 33333 €  </TableCell>
+              <TableCell align="right"> {props.metres_a_construir} m² </TableCell>
+              <TableCell align="right"> {Number(props.metres_a_construir) * 170} €  </TableCell>
             </TableRow>
 
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
                 Garatge soterrat (m²)
               </TableCell>
-              <TableCell align="right">20 m² </TableCell>
-              <TableCell align="right"> 13.200 €  </TableCell>
+              <TableCell align="right">{props.metres_garatge_soterrat} m² </TableCell>
+              <TableCell align="right"> {Number(props.metres_garatge_soterrat) * 650} €  </TableCell>
             </TableRow>
 
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
                 Banys
               </TableCell>
-              <TableCell align="right">2 </TableCell>
+              <TableCell align="right"> {props.banys} </TableCell>
               <TableCell align="right">    </TableCell>
             </TableRow>
 
@@ -247,7 +251,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
                 Escomeses
               </TableCell>
               <TableCell align="right"> </TableCell>
-              <TableCell align="right">  8.500 €  </TableCell>
+              <TableCell align="right">  {Number(props.metres_a_construir) *55 } €  </TableCell>
             </TableRow>
 
             <TableRow key="preuc">
@@ -255,7 +259,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
                 <Box fontWeight="fontWeightBold" m={1}>Total fonamentació </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
-              <TableCell align="right">76.150 €</TableCell>
+              <TableCell align="right">{ (Number(props.metres_a_construir) * 170) + Number(props.metres_garatge_soterrat) * 650 + Number(props.metres_a_construir) *55 } €</TableCell>
              
             </TableRow>
          
@@ -272,18 +276,31 @@ const Quote: React.FC <QuoteProperties> = (props) => {
           
             <TableRow key="metresquadrats">
               <TableCell component="th" scope="row">
-                IVA
+                IVA (de Cost Construcció Casa)
               </TableCell>
               <TableCell align="right">10% </TableCell>
-              <TableCell align="right"> 34.650€ </TableCell>
-             
+              <TableCell align="right"> {((Number(props.metres_a_construir) * 1200) + Number(props.metres_garatge_planta) * 1200) * 0.10}€  </TableCell>
+            </TableRow>
+            <TableRow key="metresquadrats">
+              <TableCell component="th" scope="row">
+                IVA (de Honoraris projecte arquitectònic)
+              </TableCell>
+              <TableCell align="right">21% </TableCell>
+              <TableCell align="right"> {Number(props.metres_a_construir) * 180 * 0.21} €  </TableCell>
+            </TableRow>
+            <TableRow key="metresquadrats">
+              <TableCell component="th" scope="row">
+                IVA (de Fonamentació)
+              </TableCell>
+              <TableCell align="right">10% </TableCell>
+              <TableCell align="right">  {( (Number(props.metres_a_construir) * 170) + Number(props.metres_garatge_soterrat) * 650 + Number(props.metres_a_construir) *55 ) * 0.1} €  </TableCell>
             </TableRow>
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
                Llicència d'obres (Xifra aproximada, a cada municipi és diferent)
               </TableCell>
               <TableCell align="right"> 4% </TableCell>
-              <TableCell align="right">  16.378€ </TableCell>
+              <TableCell align="right">  preguntar sobre quin import € </TableCell>
              
             </TableRow>
 

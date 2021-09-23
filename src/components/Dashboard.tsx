@@ -223,15 +223,9 @@ const Dashboard: React.FC = () => {
           <FormGroup>
             <h3> Indica'ns si ja disposes d'un terreny en propietat </h3>
           <FormControlLabel
-            control={<Checkbox checked={terreny} name="checked"  {...bindTerreny}       
+            control={<Switch checked={terreny} name="checked"  {...bindTerreny}       
             />}
-            label="Sí"
-          />
-          
-          <FormControlLabel
-            control={<Checkbox checked={!terreny} name="checked" {...bindTerreny}        
-            />}
-            label="No"
+            label="Sí, ja disposo d'un terreny"
           />
           
           </FormGroup>
@@ -239,15 +233,11 @@ const Dashboard: React.FC = () => {
           <FormGroup>
             <h3> Vols que calculem el cost del projecte arquitectònic? 🙂 </h3>
             <FormControlLabel
-              control={<Checkbox checked={projecte_arquitecte} name="checked" {...bindProjecteArquitecte}        
+              control={<Switch checked={projecte_arquitecte} name="checked" {...bindProjecteArquitecte}        
               />}
-              label="Sí"
+              label="Vull que calculeu el projecte arquitectònic"
             />
-            <FormControlLabel
-              control={<Checkbox checked={!projecte_arquitecte} name="checked"  {...bindProjecteArquitecte}          
-              />}
-              label="No"
-            />
+            
           </FormGroup>
 
           <h3> Explica'ns una mica més sobre casa teva 🙂 </h3>
@@ -319,15 +309,11 @@ const Dashboard: React.FC = () => {
           <FormGroup>
             <h3> Vols que la teva casa tingui un garatge, ja sigui en planta o soterrat? 🙂 </h3>
             <FormControlLabel
-              control={<Checkbox checked={garatge} name="checked"  {...bindGaratge}        
+              control={<Switch checked={garatge} name="checked"  {...bindGaratge}        
               />}
-              label="Sí"
+              label="Sí, vull garatge"
             />
-            <FormControlLabel
-              control={<Checkbox checked={!garatge} name="checked" {...bindGaratge}        
-              />}
-              label="No"
-            />
+            
           </FormGroup>
 
           <br></br>
