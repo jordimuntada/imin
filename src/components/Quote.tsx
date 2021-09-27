@@ -65,14 +65,13 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       console.log("input ---->", input);
       html2canvas(input)
         .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          const pdf = new jsPDF();
-          pdf.addImage(imgData, 'JPEG', 0, 0, 0, 0);
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+          const pdf = new jsPDF("p", "px", "a4");
+          pdf.addImage(imgData, 'PNG', 25, 25,  395, 642, "pressu", "FAST", 0);
           // pdf.output('dataurlnewwindow');
           pdf.save("download.pdf");
         });
-        
-
+      
     setLoading(false);
   }
 
@@ -99,13 +98,14 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       }}
       onSubmit={makePDFinvoice}
     >
-    <div id="divToPrint">
-      <h1 style={{ fontSize: "22px", fontWeight: 800 }}>
+    <div id="divToPrint" style ={{background: "white"}}>
+      <h1 style={{ fontSize: "22px", fontWeight: 800, color: "#016B66" }}>
         {" "}
-        AIXÓ ÉS EL TEU PRESSUPOST
+        Pressupost I'm in
       </h1>
-
-      <TableContainer component={Paper}>
+      <Box sx={{ fontSize: 'h6.fontSize', m: 1, color: "#016B66" }}>Pressupost I'm in</Box>
+      <Box sx={{ fontSize: 16, m: 1, fontWeight: "light" }}>CONSTRUCCIÓ D'UN HABITATGE I'M IN. Preus amb impostos inclosos a part.</Box>
+      <TableContainer style ={{background: "white"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -118,7 +118,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
           
             <TableRow key="metresquadrats">
               <TableCell component="th" scope="row">
-                Metres quadrats -- {calculateTotalConstruction} metres
+                Metres quadrats -- {calculateTotalConstruction()} metres
               </TableCell>
               <TableCell align="right">{props.metres_a_construir} m² </TableCell>
               <TableCell align="right">{Number(props.metres_a_construir) * 1200} €</TableCell>

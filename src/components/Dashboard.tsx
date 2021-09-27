@@ -27,6 +27,7 @@ import * as AWS from 'aws-sdk';
 
 import { fetchData } from "../AwsFunctions/fetch";
 import { putData } from "../AwsFunctions/put";
+import { Box } from "@material-ui/core";
 
 const Field = styled(TextField)({
   margin: "10px 0",
@@ -200,10 +201,11 @@ const Dashboard: React.FC = () => {
       >
         <LinkedInIcon /> My LinkedIn Profile
       </Button>
+
       <Button variant="contained" color="default" onClick={handleLogout}>
         <ExitToAppIcon /> Logout
       </Button>
-    
+
       <Button onClick={() => fetchDataFormDynamoDb()}> Fetch </Button>
       <Button onClick={() => addDataToDynamoDB()}> Put </Button>
 
