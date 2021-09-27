@@ -2,6 +2,13 @@ import React from "react";
 import CSS from "csstype";
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from "@material-ui/core/TextField";
+import {
+  createTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import { styled } from "@material-ui/core/styles";
 import { useInput } from "../utils/forms";
@@ -30,6 +37,9 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  logo: {
+    maxWidth: 160,
+  },
 });
 
 const Field = styled(TextField)({
@@ -40,6 +50,11 @@ const DLink = styled(Link)({
   margin: "15px 0",
   textAlign: "right",
 });
+
+let theme = createTheme();
+theme = responsiveFontSizes(theme);
+
+
 
 const Quote: React.FC <QuoteProperties> = (props) => {
   const [loading, setLoading] = React.useState(false);
@@ -62,12 +77,12 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       
 
       const input = document.getElementById('divToPrint') as HTMLCanvasElement;
-      console.log("input ---->", input);
+
       html2canvas(input)
         .then((canvas) => {
           const imgData = canvas.toDataURL("image/jpeg", 1.0);
-          const pdf = new jsPDF("p", "px", "a4");
-          pdf.addImage(imgData, 'PNG', 25, 25,  395, 642, "pressu", "FAST", 0);
+          const pdf = new jsPDF("p", "px", "ledger");
+          pdf.addImage(imgData, 'PNG', 25, 25,  0, 0, "pressu", "FAST", 0);
           // pdf.output('dataurlnewwindow');
           pdf.save("download.pdf");
         });
@@ -99,17 +114,24 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       onSubmit={makePDFinvoice}
     >
     <div id="divToPrint" style ={{background: "white"}}>
+      {/*
       <h1 style={{ fontSize: "22px", fontWeight: 800, color: "#016B66" }}>
         {" "}
         Pressupost I'm in
       </h1>
-      <Box sx={{ fontSize: 'h6.fontSize', m: 1, color: "#016B66" }}>Pressupost I'm in</Box>
+      */}
+     
+
+      <Box>
+        <img src={require('../img/logo_imini.png')} alt="logo" className={classes.logo} />
+      </Box>
+      <Box sx={{m: 1, color: "#016B66" }} fontSize="40px" >Pressupost I'm in</Box>
       <Box sx={{ fontSize: 16, m: 1, fontWeight: "light" }}>CONSTRUCCIÓ D'UN HABITATGE I'M IN. Preus amb impostos inclosos a part.</Box>
       <TableContainer style ={{background: "white"}}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell> <Box fontWeight="fontWeightBold" m={1}> Cost Construcció Casa Passiva </Box> </TableCell>
+          <TableRow >
+            <TableCell> <Box fontWeight="fontWeightBold" m={1} color="#016B66" > Cost Construcció Casa Passiva </Box> </TableCell>
       
             
           </TableRow>
@@ -153,7 +175,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
 
             <TableRow key="preuc">
               <TableCell component="th" scope="row">
-                <Box fontWeight="fontWeightBold" m={1}> Total de la construcció </Box>
+                <Box fontWeight="fontWeightBold" m={1} color="#016B66"> Total de la construcció </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="right"> {(Number(props.metres_a_construir) * 1200) + Number(props.metres_garatge_planta) * 1200} €</TableCell>
@@ -166,7 +188,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><Box fontWeight="fontWeightBold" m={1}> Honoraris projecte arquitectònic (En cas que hagis indicat que ja tens arquitecte propi, el valor serà 0€) </Box> </TableCell>
+            <TableCell><Box fontWeight="fontWeightBold" m={1} color="#016B66"> Honoraris projecte arquitectònic (En cas que hagis indicat que ja tens arquitecte propi, el valor serà 0€) </Box> </TableCell>
       
             
           </TableRow>
@@ -194,7 +216,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
 
             <TableRow key="preuc">
               <TableCell component="th" scope="row">
-                <Box fontWeight="fontWeightBold" m={1}>Total projecte arquitectònic i direcció d'obra: </Box>
+                <Box fontWeight="fontWeightBold" m={1} color="#016B66"> Total projecte arquitectònic i direcció d'obra: </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="right"> {Number(props.metres_a_construir) * 180} €</TableCell>
@@ -207,7 +229,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><Box fontWeight="fontWeightBold" m={1}> Fonamentació </Box> </TableCell>
+            <TableCell><Box fontWeight="fontWeightBold" m={1} color="#016B66"> Fonamentació </Box> </TableCell>
       
             
           </TableRow>
@@ -256,7 +278,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
 
             <TableRow key="preuc">
               <TableCell component="th" scope="row">
-                <Box fontWeight="fontWeightBold" m={1}>Total fonamentació </Box>
+                <Box fontWeight="fontWeightBold" m={1} color="#016B66">Total fonamentació </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="right">{ (Number(props.metres_a_construir) * 170) + Number(props.metres_garatge_soterrat) * 650 + Number(props.metres_a_construir) *55 } €</TableCell>
@@ -268,7 +290,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><Box fontWeight="fontWeightBold" m={1}> Impostos </Box> </TableCell>
+            <TableCell><Box fontWeight="fontWeightBold" m={1} color="#016B66"> Impostos </Box> </TableCell>
             
           </TableRow>
         </TableHead>
@@ -276,28 +298,28 @@ const Quote: React.FC <QuoteProperties> = (props) => {
           
             <TableRow key="metresquadrats">
               <TableCell component="th" scope="row">
-                IVA (de Cost Construcció Casa)
+                <Box color="#016B66"> IVA (de Cost Construcció Casa) </Box>
               </TableCell>
               <TableCell align="right">10% </TableCell>
               <TableCell align="right"> {((Number(props.metres_a_construir) * 1200) + Number(props.metres_garatge_planta) * 1200) * 0.10}€  </TableCell>
             </TableRow>
             <TableRow key="metresquadrats">
               <TableCell component="th" scope="row">
-                IVA (de Honoraris projecte arquitectònic)
+              <Box color="#016B66"> IVA (de Honoraris projecte arquitectònic) </Box>
               </TableCell>
               <TableCell align="right">21% </TableCell>
               <TableCell align="right"> {Number(props.metres_a_construir) * 180 * 0.21} €  </TableCell>
             </TableRow>
             <TableRow key="metresquadrats">
               <TableCell component="th" scope="row">
-                IVA (de Fonamentació)
+              <Box color="#016B66"> IVA (de Fonamentació) </Box>
               </TableCell>
               <TableCell align="right">10% </TableCell>
               <TableCell align="right">  {( (Number(props.metres_a_construir) * 170) + Number(props.metres_garatge_soterrat) * 650 + Number(props.metres_a_construir) *55 ) * 0.1} €  </TableCell>
             </TableRow>
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
-               Llicència d'obres (Xifra aproximada, a cada municipi és diferent)
+              <Box color="#016B66"> Llicència d'obres (Xifra aproximada, a cada municipi és diferent) </Box>
               </TableCell>
               <TableCell align="right"> 4% </TableCell>
               <TableCell align="right">  preguntar sobre quin import € </TableCell>
@@ -306,7 +328,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
 
             <TableRow key="preuc">
               <TableCell component="th" scope="row">
-                <Box fontWeight="fontWeightBold" m={1}>Total impostos: </Box>
+                <Box fontWeight="fontWeightBold" m={1} color="#016B66" >Total impostos: </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
               <TableCell align="right">51.028€</TableCell>
@@ -319,7 +341,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell><Box fontWeight="fontWeightBold" m={3}> TOTAL </Box> </TableCell>
+            <TableCell><Box fontWeight="fontWeightBold" m={3} color="#016B66"> TOTAL </Box> </TableCell>
             <TableCell align="right"><Box fontWeight="fontWeightBold" m={1}> 473.678€ </Box> </TableCell>
           </TableRow>
         </TableHead>
