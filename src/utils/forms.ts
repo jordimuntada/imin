@@ -38,6 +38,7 @@ export const useInputNumber = (initialValue: number) => {
   };
 };
 
+//ORIGINAL useInputCheckbox
 export const useInputCheckbox = (initialValue: boolean) => {
   const [value, setValue] = useState(initialValue);
   console.log("Dins de useInputCheckbox ===   ", value.toString());

@@ -2,8 +2,8 @@ import React from "react";
 import { createStyles, makeStyles, withStyles, Theme } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
 import Button from "@material-ui/core/Button";
+import Divider from "@material-ui/core/Divider";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { Toast } from "./../utils/notifications";
@@ -15,19 +15,23 @@ import { styled } from "@material-ui/core/styles";
 import Checkbox from '@material-ui/core/Checkbox';
 import Switch from '@material-ui/core/Switch';
 import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Select from '@material-ui/core/Select';
+import { Box } from "@material-ui/core";
 import InputBase from '@material-ui/core/InputBase';
 import { useInput } from "./../utils/forms";
 import { useInputCheckbox } from "./../utils/forms";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { Email } from "@material-ui/icons";
 import Quote from "./Quote";
+import MakeQuote from "./MakeQuote";
+
 import * as AWS from 'aws-sdk';
 
 import { fetchData } from "../AwsFunctions/fetch";
 import { putData } from "../AwsFunctions/put";
-import { Box } from "@material-ui/core";
+
 
 const Field = styled(TextField)({
   margin: "10px 0",
@@ -70,13 +74,13 @@ const BootstrapInput = withStyles((theme: Theme) =>
     }),
   )(InputBase);
 
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      margin: {
-        margin: theme.spacing(1),
-      },
-    }),
-  );
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    margin: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 const Dashboard: React.FC = () => {
   const history = useHistory();
@@ -209,137 +213,7 @@ const Dashboard: React.FC = () => {
       <Button onClick={() => fetchDataFormDynamoDb()}> Fetch </Button>
       <Button onClick={() => addDataToDynamoDB()}> Put </Button>
 
-      <p>Consulta el presupuesto orientativo de la casa de madera que has diseñado. </p>
-      <p style={{ fontSize: 12, marginBottom: "20px" }}>
-        En I'm in for the planet  queremos cambiar el mundo! {" "}
-      </p>
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-        onSubmit={handleCalculator}
-      >
-          <Field label="Metres quadrats" {...bindMetresConstruir}/> <p> Metres quadrats construïts d'habitatge sense comptar pàrquing ni soterranis. 😊 </p>
-          <FormGroup>
-            <h3> Indica'ns si ja disposes d'un terreny en propietat </h3>
-          <FormControlLabel
-            control={<Switch checked={terreny} name="checked"  {...bindTerreny}       
-            />}
-            label="Sí, ja disposo d'un terreny"
-          />
-          
-          </FormGroup>
-          <Field label="Localitat" {...bindLocalitat} /> <p> On està ubicat el terreny? (El nostre radi d'actuació es limita a Catalunya) </p>
-          <FormGroup>
-            <h3> Vols que calculem el cost del projecte arquitectònic? 🙂 </h3>
-            <FormControlLabel
-              control={<Switch checked={projecte_arquitecte} name="checked" {...bindProjecteArquitecte}        
-              />}
-              label="Vull que calculeu el projecte arquitectònic"
-            />
-            
-          </FormGroup>
-
-          <h3> Explica'ns una mica més sobre casa teva 🙂 </h3>
-          <br></br>
-          <FormControl className={classes.margin}>
-          <h3> Plantes </h3>
-            
-            <Select
-              labelId="demo-customized-select-label"
-              id="demo-customized-select"
-              value={plantes}
-              onChange={handleChangePlantes}
-              input={<BootstrapInput />}
-              
-            >
-              
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>+3</MenuItem>
-            </Select>
-          </FormControl>
-          <br></br>
-          <FormControl className={classes.margin}>
-            <h3> Habitacions </h3>
-            
-            <Select
-              labelId="demo-customized-select-label"
-              id="demo-customized-select"
-              value={habitacions}
-              onChange={handleChangeHabitacions}
-              input={<BootstrapInput />}
-              
-            >
-              
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={6}>6</MenuItem>
-              <MenuItem value={7}>+6</MenuItem>
-            </Select>
-          </FormControl>
-          <br></br>
-
-          <FormControl className={classes.margin}>
-            <h3> Banys </h3>
-            
-              <Select
-                labelId="demo-customized-select-label"
-                id="demo-customized-select"
-                value={banys}
-                onChange={handleChangeBanys}
-                input={<BootstrapInput />}
-        
-              >
-              
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>+4</MenuItem>
-            </Select>
-          </FormControl>
-          
-          <br></br>
-          
-          <FormGroup>
-            <h3> Vols que la teva casa tingui un garatge, ja sigui en planta o soterrat? 🙂 </h3>
-            <FormControlLabel
-              control={<Switch checked={garatge} name="checked"  {...bindGaratge}        
-              />}
-              label="Sí, vull garatge"
-            />
-            
-          </FormGroup>
-
-          <br></br>
-          <p>Si vols comptar amb un pàrquing soterrat o bé amb un pàrquing en planta. Indica'n els metres quadrats.</p>
-          <Field label="Garatge soterrat" {...bindMetresGaratgeSoterrat}/> 
-          <Field label="Garatge en planta"  {...bindMetresGaratgePlanta}/>
-          <p> Metres quadrats construïts d'habitatge sense comptar pàrquing ni soterranis. 😊 </p>
-
-          <br></br>
-          <TextField label="Message"/>
-          <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            type="submit"
-            disabled={loading}
-          >
-            {loading && <CircularProgress size={20} style={{ marginRight: 20 }} />}
-            Calcular
-          </Button>
-      </form>
-        
-        {quoteON ? <Quote metres_a_construir={metres_construir} terreny={terreny} projecte_arquitecte={projecte_arquitecte} localitat={localitat} garatge={garatge} metres_garatge_soterrat={metres_garatge_soterrat} metres_garatge_planta={metres_garatge_planta} plantes={plantes} habitacions={habitacions} banys={banys} /> : "RETEEEEEIX" }
-
+      <MakeQuote />
 
 
     </>
