@@ -203,15 +203,13 @@ const MakeQuote: React.FC = () => {
   const { value: metros_cuadrados_construidos, bind: bindMetrosCuadradosConstruidos } = useInput("");
 
   const { value: metres_construir, bind: bindMetresConstruir } = useInput("");
-  const { value: terreny, bind: bindTerreny } = useInputCheckbox(false);
+  const { value: terreny, bind: bindTerreny } = useInput("0");
   const { value: localitat, bind: bindLocalitat } = useInput("");
-  let { value: projecte_arquitecte, bind: bindProjecteArquitecte } = useInputCheckbox(true); // el deixem en TRUE per defecte
-  let { value: projecte_arquitecte_NO, bind: bindProjecteArquitecte_NO } = useInputCheckbox(false);
-  let { value: projecte_arquitecte_socArquitecte, bind: bindProjecteArquitecte_socArquitecte } = useInputCheckbox(false);
+  const { value: projecte_arquitecte, bind: bindProjecteArquitecte } = useInput("");
   //const { value: plantes, bind: plantes } = useInput("");
   //const { value: habitacions, bind: bindHabitacions } = useInput("");
   //const { value: banys, bind: bindBanys } = useInput("");
-  const { value: garatge, bind: bindGaratge } = useInputCheckbox(false);
+  const { value: garatge, bind: bindGaratge } = useInput("0");
   const { value: metres_garatge_soterrat, bind: bindMetresGaratgeSoterrat } = useInput("");
   const { value: metres_garatge_planta, bind: bindMetresGaratgePlanta } = useInput("");
   const [plantes, setPlantes] = React.useState(0);
@@ -318,15 +316,25 @@ const MakeQuote: React.FC = () => {
         onSubmit={handleCalculator}
         >
             <Field label="Metres quadrats" {...bindMetresConstruir}/> <p> Metres quadrats construïts d'habitatge sense comptar pàrquing ni soterranis. 😊 </p>
-            <FormGroup>
-            <h3> Indica'ns si ja disposes d'un terreny en propietat </h3>
-            <FormControlLabel
-            control={<Switch checked={terreny} name="checked" {...bindTerreny}    
-            />}
-            label= {terreny ? "Sí, ja disposo d'un terreny" : "No, no disposo d'un terreny"}
-            />
             
-            </FormGroup>
+            
+            
+
+            <FormControl component="fieldset">
+            <FormLabel component="legend"><h3> Indica'ns si ja disposes d'un terreny en propietat </h3></FormLabel>
+            <RadioGroup
+                aria-label="terreny"
+                defaultValue={"0"}
+                name="radio-buttons-group-terreny"
+                {...bindTerreny}
+            >
+                <FormControlLabel  value={"0"} control={<Radio />} label="No, no disposo d'un terreny" />
+                <FormControlLabel  value={"1"} control={<Radio />} label="Sí, ja disposo d'un terreny" />
+
+            </RadioGroup>
+            </FormControl>
+
+
             <Field label="Localitat" {...bindLocalitat} /> <p> On està ubicat el terreny? (El nostre radi d'actuació es limita a Catalunya) </p>
 
 
@@ -336,10 +344,11 @@ const MakeQuote: React.FC = () => {
                 aria-label="projarq"
                 defaultValue="Calcular"
                 name="radio-buttons-group-projarq"
+                {...bindProjecteArquitecte}
             >
-                <FormControlLabel value="Calcular" control={<Radio {...bindProjecteArquitecte}/>} label="Vull que calculeu el projecte arquitectònic" />
-                <FormControlLabel value="noCalcular" control={<Radio {...bindProjecteArquitecte_NO}/>} label="No, no vull que calculeu el projecte arquitectònic" />
-                <FormControlLabel value="arq" control={<Radio {...bindProjecteArquitecte_socArquitecte}/>} label="Sóc arquitecte/a" />
+                <FormControlLabel  value="Calcular" control={<Radio />} label="Vull que calculeu el projecte arquitectònic" />
+                <FormControlLabel  value="noCalcular" control={<Radio />} label="No, no vull que calculeu el projecte arquitectònic" />
+                <FormControlLabel value="arq" control={<Radio />} label="Sóc arquitecte/a" />
             </RadioGroup>
             </FormControl>
 
@@ -409,15 +418,18 @@ const MakeQuote: React.FC = () => {
             
             <br></br>
             
-            <FormGroup>
-            <h3> Vols que la teva casa tingui un garatge, ja sigui en planta o soterrat? 🙂 </h3>
-            <FormControlLabel
-                control={<Switch checked={garatge} name="checked"  {...bindGaratge}        
-                />}
-                label="Sí, vull garatge"
-            />
-            
-            </FormGroup>
+            <FormControl component="fieldset">
+                <FormLabel component="legend"> <p> Vols que la teva casa tingui un garatge, ja sigui en planta o soterrat? 🙂 </p></FormLabel>
+                <RadioGroup
+                    aria-label="garatge"
+                    defaultValue="0"
+                    name="radio-buttons-group-garatge"
+                    {...bindProjecteArquitecte}
+                >
+                    <FormControlLabel  value="1" control={<Radio />} label="Sí, vull garatge" />
+                    <FormControlLabel  value="0" control={<Radio />} label="No, no vull garatge" />
+                </RadioGroup>
+            </FormControl>
 
             <br></br>
             <p>Si vols comptar amb un pàrquing soterrat o bé amb un pàrquing en planta. Indica'n els metres quadrats.</p>
@@ -449,8 +461,6 @@ const MakeQuote: React.FC = () => {
             metres_a_construir={metres_construir} 
             terreny={terreny} 
             projecte_arquitecte={projecte_arquitecte}
-            projecte_arquitecte_NO={projecte_arquitecte_NO}
-            projecte_arquitecte_socArquitecte={projecte_arquitecte_socArquitecte}
             localitat={localitat} 
             garatge={garatge} 
             metres_garatge_soterrat={metres_garatge_soterrat} 
