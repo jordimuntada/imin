@@ -334,8 +334,8 @@ const MakeQuote: React.FC = () => {
             </RadioGroup>
             </FormControl>
 
-
-            <Field label="Localitat" {...bindLocalitat} /> <p> On està ubicat el terreny? (El nostre radi d'actuació es limita a Catalunya) </p>
+            <p> On està ubicat el terreny? (El nostre radi d'actuació es limita a Catalunya) </p>
+            <Field label="Localitat" {...bindLocalitat} /> 
 
 
             <FormControl component="fieldset">
@@ -424,7 +424,7 @@ const MakeQuote: React.FC = () => {
                     aria-label="garatge"
                     defaultValue="0"
                     name="radio-buttons-group-garatge"
-                    {...bindProjecteArquitecte}
+                    {...bindGaratge}
                 >
                     <FormControlLabel  value="1" control={<Radio />} label="Sí, vull garatge" />
                     <FormControlLabel  value="0" control={<Radio />} label="No, no vull garatge" />

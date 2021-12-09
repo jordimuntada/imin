@@ -112,7 +112,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
   const { value: metros_cuadrados_construidos, bind: bindMetrosCuadradosConstruidos } = useInput("");
 
   function calculateTotalConstruction(){
-    const preuMetreQuadrat = 1200;
+    const preuMetreQuadrat = 1400; //1200
     return (Number(props.metres_a_construir) * preuMetreQuadrat) + Number(props.metres_garatge_planta) * preuMetreQuadrat;
   }
 
@@ -139,33 +139,38 @@ const Quote: React.FC <QuoteProperties> = (props) => {
 
   function calculateTotalFonamentacio(iva?: String){
     const preuEscomeses = calculateEscomeses();
-    const preuFon = 170;
+    const preuFon = 190;
     const preuFonSot = 650;
     const preuFonPla = 290;
     const valorIVA = 0.10;
+    console.log("SÓC DINTRE DE calculateTotalFonamentacio y var iva és = ", iva);
     if (iva === "iva") {
-      if (Number(props.metres_garatge_soterrat) > 0)
+      if (Number(props.metres_garatge_soterrat) >= 0)
       {
         const calcul = ((Number(props.metres_a_construir) * preuFon) + (Number(props.metres_garatge_soterrat) * preuFonSot) + preuEscomeses ) * valorIVA;
+        console.log("calcula A  IVA ===", calcul);
         return calcul;
       }
       else{
         if (Number(props.metres_garatge_planta) > 0)
         {
           const calcul = ( (Number(props.metres_a_construir) * preuFon) + (Number(props.metres_garatge_planta) * preuFonPla) + preuEscomeses ) * valorIVA;
+          console.log("calcula B  IVA===", calcul);
           return calcul;
         }
       }
     } else{
-      if (Number(props.metres_garatge_soterrat) > 0)
+      if (Number(props.metres_garatge_soterrat) >= 0)
       {
         const calcul = ( (Number(props.metres_a_construir) * preuFon) + (Number(props.metres_garatge_soterrat) * preuFonSot) + preuEscomeses );
+        console.log("calcula A ===", calcul);
         return calcul;
       }
       else{
         if (Number(props.metres_garatge_planta) > 0)
         {
           const calcul = ( (Number(props.metres_a_construir) * preuFon) + (Number(props.metres_garatge_planta) * preuFonPla) + preuEscomeses );
+          console.log("calcula B ===", calcul);
           return calcul;
         }
       }
@@ -387,6 +392,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell align="right"> {Number(props.metres_a_construir) * 170} €  </TableCell>
             </TableRow>
 
+        { props.garatge === "1" ?  
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
                 Garatge { (Number(props.metres_garatge_soterrat) > 0) ? "soterrat" : "en planta" } (m²)
@@ -394,6 +400,15 @@ const Quote: React.FC <QuoteProperties> = (props) => {
               <TableCell align="right">{ (Number(props.metres_garatge_soterrat) > 0) ? props.metres_garatge_soterrat : props.metres_garatge_planta } m² </TableCell>
               <TableCell align="right">{CalculateFonamentacioGaratge()} €  </TableCell>
             </TableRow>
+            : 
+            <TableRow key="garatge">
+              <TableCell component="th" scope="row">
+                Garatge (m²)
+              </TableCell>
+              <TableCell align="right">0 m² </TableCell>
+              <TableCell align="right">0 €  </TableCell>
+            </TableRow> 
+        }
 
             <TableRow key="garatge">
               <TableCell component="th" scope="row">
@@ -416,7 +431,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
                 <Box fontWeight="fontWeightBold" m={1} color="#016B66">Total fonamentació </Box>
               </TableCell>
               <TableCell align="right"></TableCell>
-              <TableCell align="right">{ calculateTotalFonamentacio() } €</TableCell>
+              <TableCell align="right">{ calculateTotalFonamentacio("senseIVA") } €</TableCell>
             </TableRow>
          
         </TableBody>
@@ -476,7 +491,7 @@ const Quote: React.FC <QuoteProperties> = (props) => {
         <TableHead>
           <TableRow>
             <TableCell><Box fontWeight="fontWeightBold" m={3} color="#016B66"> TOTAL </Box> </TableCell>
-            <TableCell align="right"><Box fontWeight="fontWeightBold" m={1}> {Number(calculateTotalConstruction()) + Number(calculateTotalProjArq()) + Number(calculateTotalFonamentacio()) + (calculateIVACostConstruccio() + calculateIVAProjArq() + Number(calculateTotalFonamentacio("iva"))) } € </Box> </TableCell>
+            <TableCell align="right"><Box fontWeight="fontWeightBold" m={1}> {Number(calculateTotalConstruction()) + Number(calculateTotalProjArq()) + Number(calculateTotalFonamentacio("senseIVA")) + (calculateIVACostConstruccio() + calculateIVAProjArq() + Number(calculateTotalFonamentacio("iva"))) } € </Box> </TableCell>
           </TableRow>
         </TableHead>
         
