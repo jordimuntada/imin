@@ -431,11 +431,18 @@ const MakeQuote: React.FC = () => {
                 </RadioGroup>
             </FormControl>
 
-            <br></br>
-            <p>Si vols comptar amb un pàrquing soterrat o bé amb un pàrquing en planta. Indica'n els metres quadrats.</p>
-            <Field label="Garatge soterrat" {...bindMetresGaratgeSoterrat}/> 
-            <Field label="Garatge en planta"  {...bindMetresGaratgePlanta}/>
-            <p> Metres quadrats construïts d'habitatge sense comptar pàrquing ni soterranis. 😊 </p>
+            {
+            garatge === "1" ? 
+            <React.Fragment>
+              <br></br>
+              <p>Si vols comptar amb un pàrquing soterrat o bé amb un pàrquing en planta. Indica'n els metres quadrats.</p>
+              <Field label="Garatge soterrat" {...bindMetresGaratgeSoterrat}/> 
+              <Field label="Garatge en planta"  {...bindMetresGaratgePlanta}/>
+              <p> Metres quadrats construïts d'habitatge sense comptar pàrquing ni soterranis. 😊 </p>
+            </React.Fragment>
+             : null }
+            
+            
 
             <br></br>
             <TextField label="Comentaris"/>
@@ -468,7 +475,7 @@ const MakeQuote: React.FC = () => {
             plantes={plantes} 
             habitacions={habitacions} 
             banys={banys} 
-            /> : "REPEEEEE" }
+            /> : null }
     </>
   );
 };
