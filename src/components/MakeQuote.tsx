@@ -165,9 +165,7 @@ const MakeQuote: React.FC = () => {
   const [loading, setLoading] = React.useState(false);
   const [quoteON, setQuoteON] = React.useState(false);
   const classes = useStyles();
-  console.log("MakeQuote CLASSES ARE = ", classes);
-
-
+  
 /*
   Auth.currentAuthenticatedUser({
     bypassCache: false  // Optional, By default is false. If set to true, this call will send a request to Cognito to get the latest user data
